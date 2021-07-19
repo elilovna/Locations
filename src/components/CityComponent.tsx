@@ -19,7 +19,7 @@ export const CityComponent: React.FC<CityComponentProps> = ({
       </div>
       <div className="overflow-x-scroll">
         <div className="grid gap-4 grid-flow-col">
-          {beaches.map((el, idx) => {
+          {beaches.slice(0, 6).map((el, idx) => {
             return (
               <div
                 style={{

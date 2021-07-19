@@ -13,13 +13,11 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
   photos,
 }) => {
   return (
-    <div className="rounded-md overflow-hidden w-full">
+    <div className="rounded-md overflow-hidden w-full border border-gray-300">
       {photos.length > 0 ? (
         <Carousel showThumbs={false} showStatus={false} className="max-h-52">
-          {photos?.map((el, idx) => {
-            return (
-              <Image src={el} name={name} key={idx}/>
-            );
+          {photos.map((el, idx) => {
+            return <Image src={el} name={name} key={idx} />;
           })}
         </Carousel>
       ) : (
@@ -29,9 +27,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
           showIndicators={false}
           className="max-h-52"
         >
-          {[
-            <Image src={beach} name={name}/>
-          ]}
+          {[<Image src={beach} name={name} />]}
         </Carousel>
       )}
     </div>
@@ -39,11 +35,11 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
 };
 
 interface ImageProps {
-  src: string
-  name: string
+  src: string;
+  name: string;
 }
 
-const Image: React.FC<ImageProps> = ({src, name}) => {
+const Image: React.FC<ImageProps> = ({ src, name }) => {
   return (
     <div>
       <img src={src} alt={name} />

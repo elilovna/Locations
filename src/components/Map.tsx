@@ -42,6 +42,7 @@ export const GoogleMap: React.FC<GoogleMapsProps> = ({
   return (
     <div className="w-1/2 h-screen">
       <GoogleMapReact
+        yesIWantToUseGoogleMapApiInternals
         bootstrapURLKeys={{
           key: 'AIzaSyApQ_v5-c91Jni8PC_znRRzPGxnKjuTBZc',
         }}

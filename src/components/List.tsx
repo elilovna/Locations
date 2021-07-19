@@ -1,35 +1,38 @@
 import React, { useMemo } from 'react';
 import { Location } from '../types';
 import { CityComponent } from './CityComponent';
+import { ListElement } from './ListElement';
 
 type Props = {
   locations: Location[];
 };
 
-type InfoByCounty = {
+export type InfoByCounty = {
   [key: string]: Location[];
 };
 
 export const List: React.FC<Props> = ({ locations }) => {
-  console.log('locations==>',locations)
-
-  const memoizedValue = useMemo(() => {
+  const content = useMemo(() => {
     const infoStart: InfoByCounty = {};
-    return locations.reduce((acc, curr) => {
+    const dataByCity = locations.reduce((acc, curr) => {
       const res = { ...acc };
       return { ...res, [curr.COUNTY]: [...(res[curr.COUNTY] ?? []), curr] };
     }, infoStart);
-  }, [locations]);
-  console.log("memoizedValue==>",memoizedValue)
-  const keys = Object.keys(memoizedValue); //TODO:refactor
 
-  return  <div className="w-1/2">
-  {keys.map((el, idx) => {
-    return (
-      <div key={idx}>
-        <CityComponent cityName={el} beaches={memoizedValue[el]} />
-      </div>
+    const keys = Object.keys(dataByCity); 
+
+    return keys.length > 1 ? (
+      keys.map((el, idx) => {
+        return (
+          <div key={idx}>
+            <CityComponent cityName={el} beaches={dataByCity[el]} />
+          </div>
+        );
+      })
+    ) : (
+      <ListElement locations={locations} />
     );
-  })}
-</div>;
+  }, [locations]);
+
+  return <div className="w-1/2 h-screen overflow-scroll">{content}</div>;
 };
