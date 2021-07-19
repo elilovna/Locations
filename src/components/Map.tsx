@@ -1,5 +1,6 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
+import { debounce } from 'lodash';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Location } from '../types';
 import { Marker } from './Marker';
 
@@ -23,6 +24,11 @@ export const GoogleMap: React.FC<GoogleMapsProps> = ({ locations }) => {
       setBounds(map.getBounds());
     },
     [setBounds]
+  );
+
+  const refreshBoundsDebounced = useMemo(
+    () => debounce(refreshBounds, 1, { leading: true, trailing: true }),
+    [refreshBounds]
   );
 
   const markers = useMemo(() => {
@@ -52,6 +58,7 @@ export const GoogleMap: React.FC<GoogleMapsProps> = ({ locations }) => {
         }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
+        onDrag={refreshBoundsDebounced}
         onDragEnd={refreshBounds}
         onGoogleApiLoaded={({ map }) => refreshBounds(map)}
       >
