@@ -1,11 +1,12 @@
 import GoogleMapReact from 'google-map-react';
-import { debounce } from 'lodash';
-import React, { useCallback, useMemo, useState } from 'react';
+import _ from 'lodash';
+import React, { useMemo } from 'react';
 import { Location } from '../types';
 import { Marker } from './Marker';
 
 interface GoogleMapsProps {
   locations: Location[];
+  refreshBounds: (map: any) => void;
 }
 
 const defaultProps = {
@@ -16,39 +17,27 @@ const defaultProps = {
   zoom: 10,
 };
 
-export const GoogleMap: React.FC<GoogleMapsProps> = ({ locations }) => {
-  const [bounds, setBounds] = useState<any>(null);
-
-  const refreshBounds = useCallback(
-    (map: any) => {
-      setBounds(map.getBounds());
-    },
-    [setBounds]
-  );
-
+export const GoogleMap: React.FC<GoogleMapsProps> = ({
+  locations,
+  refreshBounds,
+}) => {
   const refreshBoundsDebounced = useMemo(
-    () => debounce(refreshBounds, 1, { leading: true, trailing: true }),
+    () => _.debounce(refreshBounds, 1, { leading: true, trailing: true }),
     [refreshBounds]
   );
 
   const markers = useMemo(() => {
-    if (!bounds) {
-      return [];
-    }
-
-    return locations
-      .filter((l) => bounds.contains({ lat: l.LATITUDE, lng: l.LONGITUDE }))
-      .map((el) => {
-        return (
-          <Marker
-            text={`${el.ID}`}
-            lat={el.LATITUDE}
-            lng={el.LONGITUDE}
-            key={el.ID}
-          />
-        );
-      });
-  }, [locations, bounds]);
+    return locations.map((el) => {
+      return (
+        <Marker
+          text={`${el.ID}`}
+          lat={el.LATITUDE}
+          lng={el.LONGITUDE}
+          key={el.ID}
+        />
+      );
+    });
+  }, [locations]);
 
   return (
     <div className="w-1/2 h-screen">

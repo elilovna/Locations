@@ -6,7 +6,7 @@ import { Location } from '../types';
 export const useLocations = () => {
   const [{ data: locations, ...rest }] = useAxios({ url: `https://api.coastal.ca.gov/access/v1/locations` })
 
-  const formattedLocations = useMemo(() => {
+  const formattedLocations: Location[] = useMemo(() => {
     if (!locations) {
       return null
     }
