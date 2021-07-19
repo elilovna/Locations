@@ -1,26 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useLocations } from './API/api';
 import './App.css';
+import { Info } from './components/Info';
+import { GoogleMap } from './components/Map';
+import './index.css';
 
-function App() {
+const App = () => {
+  const { locations } = useLocations();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-row justify-between space-x-6">
+      {/* {locations && <Info locations={locations} />} */}
+      {locations && <GoogleMap locations={locations} />}
     </div>
   );
-}
+};
 
 export default App;
