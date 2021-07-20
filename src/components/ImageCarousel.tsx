@@ -13,7 +13,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
   photos,
 }) => {
   return (
-    <div className="rounded-md overflow-hidden w-full border border-gray-300">
+    <div className="rounded-md overflow-hidden w-full border border-gray-400">
       {photos.length > 0 ? (
         <Carousel showThumbs={false} showStatus={false} className="max-h-52">
           {photos.map((el, idx) => {

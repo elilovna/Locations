@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import GoogleMapReact from 'google-map-react';
 import _ from 'lodash';
 import React, { useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Location } from '../types';
 import { Marker } from './Marker';
 
@@ -11,7 +10,6 @@ interface GoogleMapsProps {
   refreshBounds: (map: any) => void;
   selectedLocation: any;
   show: boolean;
-  // pinClickHandler: (id:number) => void
 }
 
 const defaultProps = {
@@ -34,7 +32,7 @@ export const GoogleMap: React.FC<GoogleMapsProps> = ({
   );
 
   const handleMarkerClick = useCallback((id: number) => {
-    window.open(window.location.href + `/info/${id}`);
+    window.open(window.location.href + `location/${id}`);
   }, []);
 
   const markers = useMemo(() => {

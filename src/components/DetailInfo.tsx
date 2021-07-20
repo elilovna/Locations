@@ -13,8 +13,14 @@ export const DetailInfo: React.FC = () => {
   }
 
   return (
-    <div>
-      <ImageCarousel name={location.NameMobileWeb} photos={location.photos} />
+    <div  style={{
+      width: 500
+    }}>
+      <ImageCarousel
+        name={location.NameMobileWeb}
+        photos={location.photos}
+       
+      />
     </div>
   );
 };

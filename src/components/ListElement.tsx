@@ -75,7 +75,7 @@ export const ListElement: React.FC<Props> = ({ locations, mouseLeave, mouseEnter
       <div className="py-4">
         <ReactPaginate
           previousLabel={'Previous'}
-          pageClassName={'bg-gray-50 px-4 py-1'}
+          pageClassName={'bg-gray-50 border rounded-md border-gray-400 px-4 py-1'}
           nextLabel={'Next'}
           breakLabel={'...'}
           pageCount={pageCount}
@@ -83,7 +83,7 @@ export const ListElement: React.FC<Props> = ({ locations, mouseLeave, mouseEnter
           pageRangeDisplayed={5}
           onPageChange={handlePageClick}
           containerClassName={'flex flex-row justify-around'}
-          activeClassName={'bg-gray-200'}
+          activeClassName={'bg-blue-200'}
         />
       </div>
     </div>

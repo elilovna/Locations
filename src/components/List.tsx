@@ -33,7 +33,7 @@ export const List: React.FC<Props> = ({
     return keys.length > 1 ? (
       keys.map((el, idx) => {
         return (
-          <div key={idx}>
+          <div key={idx} className="ml-6">
             <CityComponent cityName={el} beaches={dataByCity[el]} />
           </div>
         );

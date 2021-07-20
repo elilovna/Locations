@@ -38,10 +38,12 @@ export const useLocationByID = (id: string) => {
   const formattedLocation: Location = { ...location };
 
   const photos = [];
-  if (location.Photo_1 !== '') photos.push(location.Photo_1);
-  if (location.Photo_2 !== '') photos.push(location.Photo_2);
-  if (location.Photo_3 !== '') photos.push(location.Photo_3);
-  if (location.Photo_4 !== '') photos.push(location.Photo_4);
+
+  if (location[0].Photo_1 !== '') photos.push(location[0].Photo_1);
+  if (location[0].Photo_2 !== '') photos.push(location[0].Photo_2);
+  if (location[0].Photo_3 !== '') photos.push(location[0].Photo_3);
+  if (location[0].Photo_4 !== '') photos.push(location[0].Photo_4);
+
   return { location: { ...formattedLocation, photos: photos } };
 };
 
@@ -51,3 +53,5 @@ export const getLocationByName = async (name: string) => {
   console.log(res);
   return res;
 };
+
+

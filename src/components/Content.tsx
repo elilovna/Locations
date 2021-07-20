@@ -6,6 +6,8 @@ import { Location } from '../types';
 import _ from 'lodash';
 import Map from '../assets/Map.svg';
 import Menu from '../assets/Menu.svg';
+import { FilterView } from './FilterView/FilterView';
+import { defaultFilters } from './FilterView/filters';
 
 export const Content: React.FC = () => {
   const { locations } = useLocations();
@@ -13,6 +15,7 @@ export const Content: React.FC = () => {
   const [selectedLocation, setSelectedLocation] = useState<number | null>(null);
   const [listData, setListData] = useState<Location[]>([]);
   const [view, setView] = useState<'list' | 'map'>('list');
+  const [filters, setFilters] = useState(defaultFilters);
 
   const refreshBounds = useCallback(
     (map: any) => {
@@ -26,10 +29,22 @@ export const Content: React.FC = () => {
       return [];
     }
 
-    return locations.filter((l) =>
+    const activeFilters = filters.filter((f) => f.value);
+
+    const locationsForBounds = locations.filter((l) =>
       bounds.contains({ lat: l.LATITUDE, lng: l.LONGITUDE })
     );
-  }, [locations, bounds]);
+
+    if (activeFilters.length === 0) {
+      return locationsForBounds;
+    }
+
+    return locationsForBounds.filter((l) => {
+      return activeFilters.reduce((prev, curr) => {
+        return prev && l[curr.key] === 'Yes';
+      }, true as boolean);
+    });
+  }, [bounds, locations, filters]);
 
   const refreshListData = useMemo(
     () =>
@@ -74,9 +89,12 @@ export const Content: React.FC = () => {
           <span>Map</span>
         </label>
       </div>
+      <div>
+        <FilterView filters={filters} changeFilters={setFilters} />
+      </div>
       <div
         className="flex flex-row justify-between space-x-6 overflow-scroll"
-        style={{ height: 'calc(100vh - 52px)' }}
+        style={{ height: 'calc(100vh - 70px)' }}
       >
         <List
           locations={listData}
@@ -90,7 +108,6 @@ export const Content: React.FC = () => {
           refreshBounds={refreshBounds}
           selectedLocation={selectedLocation}
           show={view === 'map'}
-          // pinClickHandler={pinClickHandler}
         />
       </div>
     </>
