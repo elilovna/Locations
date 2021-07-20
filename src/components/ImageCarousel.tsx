@@ -27,7 +27,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
           showIndicators={false}
           className="max-h-52"
         >
-          {[<Image src={beach} name={name} />]}
+          {[<Image src={beach} name={name} key={name} />]}
         </Carousel>
       )}
     </div>

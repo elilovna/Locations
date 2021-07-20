@@ -4,11 +4,13 @@ import { useMemo } from 'react';
 import { Location } from '../types';
 
 export const useLocations = () => {
-  const [{ data: locations, ...rest }] = useAxios({ url: `https://api.coastal.ca.gov/access/v1/locations` })
+  const [{ data: locations, ...rest }] = useAxios({
+    url: `https://api.coastal.ca.gov/access/v1/locations`,
+  });
 
   const formattedLocations: Location[] = useMemo(() => {
     if (!locations) {
-      return null
+      return null;
     }
 
     return locations.map((el: Location) => {
@@ -19,15 +21,28 @@ export const useLocations = () => {
       if (el.Photo_4 !== '') photos.push(el.Photo_4);
       return { ...el, photos: photos };
     });
-  }, [locations])
+  }, [locations]);
 
-  return { locations: formattedLocations, rest }
-}
+  return { locations: formattedLocations, rest };
+};
 
-// TODO: Add validation
-export const getLocationByID = async (id: number) => {
-  const res = await axios.get(`https://api.coastal.ca.gov/access/v1/locations`);
-  return res;
+export const useLocationByID = (id: string) => {
+  const [{ data: location }] = useAxios({
+    url: `https://api.coastal.ca.gov/access/v1/locations/id/${id}`,
+  });
+
+  if (!location) {
+    return { location: null };
+  }
+
+  const formattedLocation: Location = { ...location };
+
+  const photos = [];
+  if (location.Photo_1 !== '') photos.push(location.Photo_1);
+  if (location.Photo_2 !== '') photos.push(location.Photo_2);
+  if (location.Photo_3 !== '') photos.push(location.Photo_3);
+  if (location.Photo_4 !== '') photos.push(location.Photo_4);
+  return { location: { ...formattedLocation, photos: photos } };
 };
 
 // TODO: Add validation

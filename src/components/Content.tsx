@@ -4,15 +4,15 @@ import { List } from './List';
 import { GoogleMap } from './Map';
 import { Location } from '../types';
 import _ from 'lodash';
+import Map from '../assets/Map.svg';
+import Menu from '../assets/Menu.svg';
 
-type Props = {};
-
-export const Content: React.FC<Props> = () => {
+export const Content: React.FC = () => {
   const { locations } = useLocations();
   const [bounds, setBounds] = useState<any>(null);
-  const [selectedLocation, setSelectedLocation] = useState<any>(null);
-
+  const [selectedLocation, setSelectedLocation] = useState<number | null>(null);
   const [listData, setListData] = useState<Location[]>([]);
+  const [view, setView] = useState<'list' | 'map'>('list');
 
   const refreshBounds = useCallback(
     (map: any) => {
@@ -41,10 +41,58 @@ export const Content: React.FC<Props> = () => {
 
   useEffect(refreshListData, [refreshListData]);
 
+  const mouseLeave = useCallback(() => {
+    setSelectedLocation(null);
+  }, [setSelectedLocation]);
+
+  const mouseEnter = useCallback(
+    (id: number) => {
+      setSelectedLocation(id);
+    },
+    [setSelectedLocation]
+  );
+
   return (
-    <div className="flex flex-row justify-between space-x-6 h-screen max-h-screen">
-      <List locations={listData} />
-      <GoogleMap locations={filteredLocations} refreshBounds={refreshBounds} />
-    </div>
+    <>
+      <div className="md:hidden flex flex-row space-x-5">
+        <label
+          htmlFor="list"
+          className="flex flex-row"
+          onClick={() => setView('list')}
+        >
+          <input id="list" type="radio" className="hidden" name="view" />
+          <img src={Menu} alt="menu-icon" />
+          <span>List</span>
+        </label>
+        <label
+          htmlFor="map"
+          className="flex flex-row"
+          onClick={() => setView('map')}
+        >
+          <input id="map" type="radio" className="hidden" name="view" />
+          <img src={Map} alt="menu-icon" />
+          <span>Map</span>
+        </label>
+      </div>
+      <div
+        className="flex flex-row justify-between space-x-6 overflow-scroll"
+        style={{ height: 'calc(100vh - 52px)' }}
+      >
+        <List
+          locations={listData}
+          mouseEnter={mouseEnter}
+          mouseLeave={mouseLeave}
+          show={view === 'list'}
+        />
+
+        <GoogleMap
+          locations={filteredLocations}
+          refreshBounds={refreshBounds}
+          selectedLocation={selectedLocation}
+          show={view === 'map'}
+          // pinClickHandler={pinClickHandler}
+        />
+      </div>
+    </>
   );
 };

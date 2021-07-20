@@ -1,12 +1,17 @@
+import clsx from 'clsx';
 import GoogleMapReact from 'google-map-react';
 import _ from 'lodash';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Location } from '../types';
 import { Marker } from './Marker';
 
 interface GoogleMapsProps {
   locations: Location[];
   refreshBounds: (map: any) => void;
+  selectedLocation: any;
+  show: boolean;
+  // pinClickHandler: (id:number) => void
 }
 
 const defaultProps = {
@@ -20,27 +25,40 @@ const defaultProps = {
 export const GoogleMap: React.FC<GoogleMapsProps> = ({
   locations,
   refreshBounds,
+  selectedLocation,
+  show,
 }) => {
   const refreshBoundsDebounced = useMemo(
     () => _.debounce(refreshBounds, 1, { leading: true, trailing: true }),
     [refreshBounds]
   );
 
+  const handleMarkerClick = useCallback((id: number) => {
+    window.open(window.location.href + `/info/${id}`);
+  }, []);
+
   const markers = useMemo(() => {
     return locations.map((el) => {
       return (
         <Marker
-          text={`${el.ID}`}
+          id={el.ID}
           lat={el.LATITUDE}
           lng={el.LONGITUDE}
           key={el.ID}
+          selectedLocation={selectedLocation}
+          onClick={handleMarkerClick}
         />
       );
     });
-  }, [locations]);
+  }, [handleMarkerClick, locations, selectedLocation]);
 
   return (
-    <div className="w-1/2 h-screen">
+    <div
+      className={clsx(
+        { 'hidden md:block': !show, 'w-full ': !show },
+        'md:w-1/2 h-auto'
+      )}
+    >
       <GoogleMapReact
         yesIWantToUseGoogleMapApiInternals
         bootstrapURLKeys={{
