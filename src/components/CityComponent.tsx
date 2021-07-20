@@ -27,7 +27,7 @@ export const CityComponent: React.FC<CityComponentProps> = ({
                 }}
                 key={idx}
               >
-                <ImageCarousel photos={el.photos} name={el.LocationMobileWeb} />
+                <ImageCarousel photos={el.photos} name={el.LocationMobileWeb} className="max-h-44" />
               </div>
             );
           })}

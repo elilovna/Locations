@@ -41,6 +41,7 @@ const FilterViewRaw: React.FC<FilterViewProps> = ({
             changeFilters(newFilters);
           }}
           selected={f.value}
+          key={f.title}
         />
       );
     });

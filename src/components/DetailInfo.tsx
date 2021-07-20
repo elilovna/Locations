@@ -11,7 +11,7 @@ export const DetailInfo: React.FC = () => {
   if (!location) {
     return null;
   }
-
+  
   return (
     <div  style={{
       width: 500
@@ -19,7 +19,6 @@ export const DetailInfo: React.FC = () => {
       <ImageCarousel
         name={location.NameMobileWeb}
         photos={location.photos}
-       
       />
     </div>
   );

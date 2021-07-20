@@ -48,7 +48,7 @@ export const List: React.FC<Props> = ({
   }, [locations, mouseEnter, mouseLeave]);
 
   return (
-    <div className={clsx({ 'hidden md:block': !show, 'w-full': show }, 'md:w-1/2 overflow-scroll')}>
+    <div className={clsx({ 'hidden md:block': !show, 'w-full': show }, 'md:w-1/2 overflow-scroll mt-2')}>
       {content}
     </div>
   );

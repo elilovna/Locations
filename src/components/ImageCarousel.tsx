@@ -6,16 +6,18 @@ import beach from '../assets/beach.png';
 interface ImageCarouselProps {
   name: string;
   photos: string[] | []; //TODO:refactoring
+  className?: string
 }
 
 export const ImageCarousel: React.FC<ImageCarouselProps> = ({
   name,
   photos,
+  className
 }) => {
   return (
     <div className="rounded-md overflow-hidden w-full border border-gray-400">
       {photos.length > 0 ? (
-        <Carousel showThumbs={false} showStatus={false} className="max-h-52">
+        <Carousel showThumbs={false} showStatus={false} className={className}>
           {photos.map((el, idx) => {
             return <Image src={el} name={name} key={idx} />;
           })}
@@ -24,8 +26,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
         <Carousel
           showThumbs={false}
           showStatus={false}
-          showIndicators={false}
-          className="max-h-52"
+          className={className}
         >
           {[<Image src={beach} name={name} key={name} />]}
         </Carousel>

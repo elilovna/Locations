@@ -31,7 +31,7 @@ export const ListElement: React.FC<Props> = ({ locations, mouseLeave, mouseEnter
     <div className="flex flex-col divide-y divide-gray-300 ml-6">
       {locationsToPresent.map((el) => {
         return (
-          <div className="flex flex-row p-5" key={el.ID} onMouseEnter={() => mouseEnter(el.ID)} onMouseLeave={() => mouseLeave()}>
+          <div className="flex flex-row p-5 hover:bg-blue-50" key={el.ID} onMouseEnter={() => mouseEnter(el.ID)} onMouseLeave={() => mouseLeave()}>
             <div
               style={{
                 width: 300,
@@ -40,10 +40,11 @@ export const ListElement: React.FC<Props> = ({ locations, mouseLeave, mouseEnter
               <ImageCarousel
                 name={el.DescriptionMobileWeb}
                 photos={el.photos}
+                className="max-h-44"
               />
             </div>
             <div className="w-1/2 ml-4">
-              <h3 className="font-bold text-center">{el.NameMobileWeb}</h3>
+              <h3 className="font-bold text-center text-sm">{el.NameMobileWeb}</h3>
               <div className="text-xs text-gray-900">
                 <p className="py-1">
                   <span className="font-bold">BOATING:</span>
@@ -82,7 +83,7 @@ export const ListElement: React.FC<Props> = ({ locations, mouseLeave, mouseEnter
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={handlePageClick}
-          containerClassName={'flex flex-row justify-around'}
+          containerClassName={'flex flex-row justify-around items-center'}
           activeClassName={'bg-blue-200'}
         />
       </div>
