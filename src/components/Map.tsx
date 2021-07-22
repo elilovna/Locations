@@ -1,13 +1,13 @@
-import clsx from 'clsx';
-import GoogleMapReact from 'google-map-react';
-import _ from 'lodash';
-import React, { useCallback, useMemo } from 'react';
-import { Location } from '../types';
-import { Marker } from './Marker';
+import clsx from "clsx";
+import GoogleMapReact from "google-map-react";
+import _ from "lodash";
+import React, { useCallback, useMemo, useRef } from "react";
+import { Location } from "../types";
+import { Marker } from "./Marker";
 
 interface GoogleMapsProps {
   locations: Location[];
-  refreshBounds: (map: any) => void;
+  refreshBounds: (bounds: any) => void;
   selectedLocation: any;
   show: boolean;
 }
@@ -26,9 +26,19 @@ export const GoogleMap: React.FC<GoogleMapsProps> = ({
   selectedLocation,
   show,
 }) => {
-  const refreshBoundsDebounced = useMemo(
-    () => _.debounce(refreshBounds, 1, { leading: true, trailing: true }),
+  const mapRef = useRef<any>(null);
+
+  const refreshBoundsFromMap = useCallback(
+    (map: any) => {
+      refreshBounds(map.getBounds());
+    },
     [refreshBounds]
+  );
+
+  const refreshBoundsDebounced = useMemo(
+    () =>
+      _.debounce(refreshBoundsFromMap, 1, { leading: true, trailing: true }),
+    [refreshBoundsFromMap]
   );
 
   const handleMarkerClick = useCallback((id: number) => {
@@ -53,20 +63,29 @@ export const GoogleMap: React.FC<GoogleMapsProps> = ({
   return (
     <div
       className={clsx(
-        { 'hidden md:block': !show, 'w-full ': !show },
-        'md:w-1/2 h-auto'
+        { "hidden md:block": !show, "w-full ": !show },
+        "flex-1 h-full w-1/2"
       )}
     >
       <GoogleMapReact
         yesIWantToUseGoogleMapApiInternals
         bootstrapURLKeys={{
-          key: 'AIzaSyApQ_v5-c91Jni8PC_znRRzPGxnKjuTBZc',
+          // TODO: Add a key from .ENV
+          key: "",
         }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
         onDrag={refreshBoundsDebounced}
-        onDragEnd={refreshBounds}
-        onGoogleApiLoaded={({ map }) => refreshBounds(map)}
+        onDragEnd={refreshBoundsFromMap}
+        onGoogleApiLoaded={({ map }) => {
+          mapRef.current = map;
+          refreshBoundsFromMap(map);
+        }}
+        onChange={() => {
+          if (mapRef.current) {
+            refreshBounds(mapRef.current.getBounds());
+          }
+        }}
       >
         {markers}
       </GoogleMapReact>

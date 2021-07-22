@@ -1,23 +1,30 @@
-import * as React from 'react';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
-import beach from '../assets/beach.png';
+import * as React from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import beach from "../assets/beach.png";
 
 interface ImageCarouselProps {
   name: string;
-  photos: string[] | []; //TODO:refactoring
-  className?: string
+  photos: string[] | [];
+  className?: string;
+  showIndicators?: boolean;
 }
 
 export const ImageCarousel: React.FC<ImageCarouselProps> = ({
   name,
   photos,
-  className
+  className,
+  showIndicators,
 }) => {
   return (
     <div className="rounded-md overflow-hidden w-full border border-gray-400">
       {photos.length > 0 ? (
-        <Carousel showThumbs={false} showStatus={false} className={className}>
+        <Carousel
+          showThumbs={false}
+          showStatus={false}
+          className={className}
+          showIndicators={showIndicators}
+        >
           {photos.map((el, idx) => {
             return <Image src={el} name={name} key={idx} />;
           })}
@@ -27,6 +34,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
           showThumbs={false}
           showStatus={false}
           className={className}
+          showIndicators={showIndicators}
         >
           {[<Image src={beach} name={name} key={name} />]}
         </Carousel>

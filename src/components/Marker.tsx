@@ -1,6 +1,6 @@
-import clsx from 'clsx';
-import { memo, useCallback } from 'react';
-import Pin from '../assets/Google_Maps_pin.svg';
+import clsx from "clsx";
+import { memo, useCallback } from "react";
+import Pin from "../assets/Google_Maps_pin.svg";
 
 type Props = {
   id: number;
@@ -12,19 +12,18 @@ type Props = {
 
 const MarkerRaw: React.FC<Props> = ({ id, selectedLocation, onClick }) => {
   const handleDivClick = useCallback(() => onClick(id), [id, onClick]);
-
   return (
     <div
-      className={clsx('absolute top-2/4 left-2/4 group')}
+      className="absolute top-2/4 left-2/4 group"
       key={id}
       onClick={handleDivClick}
     >
       <img
         src={Pin}
-        alt={'pin'}
+        alt={"pin"}
         className={clsx(
-          'w-5 h-auto transition origin-bottom ease-out transform bottom-4 group-hover:scale-150',
-          { 'transform scale-150': selectedLocation === id }
+          "w-5 h-auto transition origin-bottom ease-out transform group-hover:scale-150 absolute bottom-px -right-2",
+          { "transform scale-150": selectedLocation === id }
         )}
       />
     </div>

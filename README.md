@@ -14,33 +14,24 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## About
 
-### `yarn build`
+The main goal of the project was to solve the issue of people not visiting unpopular places in California state. In order to do that, an application was made to provide an overview of different beaches in the area. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The application meets a user with a Map and a List. The Map provides an easy access to different places based on the area, while the List shows the relevant pictures and a very basic info. Upon a click on either of them, the user is taken to a detailed view, presenting the additional info available in the API. The detailed view is opened in a new tab to prevent user from losing the context of the search they've done. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To make the discovery more convenient, a filter controller was added at the top. The user can chose the facilities which of an interest to them, and filter the places. Once one filter is selected, all the places not containing the facility will be hidden from the results.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The project was developed in a desktop-first manner, nevertheless support for the mobile size was added. For convenience, the mobile presentation contains a standard Navigation-Tab based approach. 
 
-### `yarn eject`
+## Technical 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+In order to improve the loading of the map, only the visible part of the pins was decided to be loaded. google-map-react provided a convenient way to check if the given location is in the bounds of the selected area. Once this is set up, the selected area (hence filtering) is done on every map change (zoom/drag)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+For the application to work properly, a production key should be added for the map (find by TODO mark)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Future steps
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Based on the limited time, only a set of features was chosen for the development. Farther, a search by location can be added, the UI can be improved in a lot of ways, along with the UX of mobile.
