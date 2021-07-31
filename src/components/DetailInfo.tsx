@@ -24,7 +24,7 @@ export const DetailInfo: React.FC = () => {
   return (
     <div className="p-4 flex flex-col items-center container mx-auto">
       <h1 className="text-xl font-bold py-4">
-        {location.DescriptionMobileWeb}
+        {location.NameMobileWeb}
       </h1>
       <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-4 items-center">
         {location.photos.length > 0 ? (
