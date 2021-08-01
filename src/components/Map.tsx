@@ -46,13 +46,13 @@ export const GoogleMap: React.FC<GoogleMapsProps> = ({
   }, []);
 
   const markers = useMemo(() => {
-    return locations.map((el) => {
+    return locations.map((l) => {
       return (
         <Marker
-          id={el.ID}
-          lat={el.LATITUDE}
-          lng={el.LONGITUDE}
-          key={el.ID}
+          id={l.ID}
+          lat={l.LATITUDE}
+          lng={l.LONGITUDE}
+          key={l.ID}
           selectedLocation={selectedLocation}
           onClick={handleMarkerClick}
         />

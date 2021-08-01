@@ -30,16 +30,16 @@ export const Content: React.FC = () => {
       return [];
     }
 
-    const activeFilters = filters.filter((f) => f.value);
-
     let locationsForBounds = locations.filter((l) =>
       bounds.contains({ lat: l.LATITUDE, lng: l.LONGITUDE })
     );
 
+    const activeFilters = filters.filter((f) => f.value);
     if (activeFilters.length > 0) {
       locationsForBounds = locationsForBounds.filter((l) => {
         return activeFilters.reduce((prev, curr) => {
-          return prev && l[curr.key] === 'Yes';
+          const currentFilterKey = curr.key;
+          return prev && l[currentFilterKey] === 'Yes';
         }, true as boolean);
       });
     }
@@ -49,19 +49,20 @@ export const Content: React.FC = () => {
         return l.COUNTY === selectedDistrict;
       });
     }
-
     return locationsForBounds;
   }, [bounds, locations, filters, selectedDistrict]);
 
   const refreshListData = useMemo(
     () =>
-      _.debounce(() => {
+      _.debounce((filteredLocations: Location[]) => {
         setListData(filteredLocations);
-      }, 1000),
-    [filteredLocations]
+      }, 200),
+    []
   );
 
-  useEffect(refreshListData, [refreshListData]);
+  useEffect(() => {
+    refreshListData(filteredLocations);
+  }, [filteredLocations, refreshListData]);
 
   const mouseLeave = useCallback(() => {
     setSelectedLocation(null);
