@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo, useState } from "react";
-import ReactPaginate from "react-paginate";
-import { Location } from "../types";
-import { ImageCarousel } from "./ImageCarousel";
+import React, { useCallback, useMemo, useState } from 'react';
+import ReactPaginate from 'react-paginate';
+import { Location } from '../types';
+import { ImageCarousel } from './ImageCarousel';
 
 type Props = {
   locations: Location[];
@@ -65,7 +65,7 @@ export const ListElement: React.FC<Props> = ({
               </h3>
 
               <p className="text-xs text-gray-900 ">
-                {" "}
+                {' '}
                 {el.DescriptionMobileWeb}
               </p>
               <div className="">
@@ -82,18 +82,18 @@ export const ListElement: React.FC<Props> = ({
       })}
       <div className="py-4">
         <ReactPaginate
-          previousLabel={"Previous"}
+          previousLabel={'Previous'}
           pageClassName={
-            "bg-gray-50 border rounded-md border-gray-400 px-4 py-1"
+            'bg-gray-50 border rounded-md border-gray-400 px-4 py-1'
           }
-          nextLabel={"Next"}
-          breakLabel={"..."}
+          nextLabel={'Next'}
+          breakLabel={'...'}
           pageCount={pageCount}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={handlePageClick}
-          containerClassName={"flex flex-row justify-around items-center"}
-          activeClassName={"bg-blue-200"}
+          containerClassName={'flex flex-row justify-around items-center'}
+          activeClassName={'bg-blue-200'}
         />
       </div>
     </div>

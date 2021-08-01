@@ -25,7 +25,6 @@ const FilterViewRaw: React.FC<FilterViewProps> = ({
   filters,
   changeFilters,
 }) => {
-
   const filterCheckBoxes = useMemo(() => {
     return filters.map((f) => {
       return (

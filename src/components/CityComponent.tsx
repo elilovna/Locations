@@ -42,10 +42,7 @@ export const CityComponent: React.FC<CityComponentProps> = ({
                 style={{
                   width: "300px",
                 }}
-                onClick={() => {
-                  handleSeeMore();
-                  // handleLocationClick(el.ID)
-                }}
+                onClick={handleSeeMore}
                 key={idx}
               >
                 <ImageCarousel

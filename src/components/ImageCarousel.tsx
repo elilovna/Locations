@@ -5,7 +5,7 @@ import beach from "../assets/beach.png";
 
 interface ImageCarouselProps {
   name: string;
-  photos: string[] | [];
+  photos: string[];
   className?: string;
   showIndicators?: boolean;
 }
